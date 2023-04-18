@@ -5,7 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {TaskModule} from "./modules/task/task.module";
 import { UserModule } from './modules/user/user.module';
 
-import {JwtModule} from "@nestjs/jwt";
+import {StatusFactory} from "./factories/StatusFactory";
+import {Status, StatusSchema} from "./models/Status";
 
 
 @Module({
@@ -13,10 +14,11 @@ import {JwtModule} from "@nestjs/jwt";
             MongooseModule.forRoot('mongodb://localhost:27017/trans', {
                 autoIndex: true,
             }),
+            MongooseModule.forFeature([{ name: Status.name, schema: StatusSchema }]),
             TaskModule,
             UserModule,
   ],
   controllers: [AppController],
-  providers:   [AppService],
+  providers:   [AppService, StatusFactory],
 })
 export class AppModule {}

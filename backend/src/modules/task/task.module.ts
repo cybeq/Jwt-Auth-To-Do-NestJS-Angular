@@ -4,10 +4,15 @@ import { Task, TaskSchema } from "../../models/Task";
 import {TaskController} from "../../controllers/task/task.controller";
 import {TaskService} from "../../services/task/task.service";
 import {JwtService} from "@nestjs/jwt";
+import {Status, StatusSchema} from "../../models/Status";
+
+
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }]),
+        MongooseModule.forFeature([{ name: Status.name, schema: StatusSchema }]),
+
     ],
     controllers: [TaskController],
     providers: [TaskService, JwtService],
