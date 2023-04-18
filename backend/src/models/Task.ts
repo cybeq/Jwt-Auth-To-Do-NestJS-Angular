@@ -12,7 +12,14 @@ export class Task extends Document {
     @Prop({required:true})
     description:string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' , required:true})
-    user:string
+    user:User
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'})
+    updateUser:User
+
+    @Prop({default: Date.now() })
+    updateTime:Date;
+
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

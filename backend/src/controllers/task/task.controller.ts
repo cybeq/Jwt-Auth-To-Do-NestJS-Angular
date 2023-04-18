@@ -16,7 +16,6 @@ export class TaskController {
     }
     @Post('/create')
     async create(@Req() req:IAuthRequest ,@Body() task:Task): Promise<Task> {
-        task.user = req.userId;
         return this.taskService.create(task, req.userId);
     }
 
@@ -27,8 +26,8 @@ export class TaskController {
         }
     }
     @Patch('/update/:id')
-    async updateTask(@Param('id') id: string, @Body() updatedTask: Partial<Task>,): Promise<Task>
+    async updateTask(@Req() req:IAuthRequest , @Param('id') id: string, @Body() updatedTask: Partial<Task>,): Promise<Task>
     {
-        return await this.taskService.update(id, updatedTask);
+        return await this.taskService.update(id, updatedTask, req.userId);
     }
 }

@@ -10,13 +10,14 @@ export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<User>) { }
     async create(user:User):Promise<User>
     {
-            const lenghtValidation = [{n:'password',o:user.password}, {n:'full name', o:user.fullName}, {n:'name', o:user.name}];
+            const lenghtValidation = [{n:'password',o:user.password}, {n:'email', o:user.email}, {n:'name', o:user.name}];
             lenghtValidation.forEach(prop => {
-                if(String(prop.o) === null  || String(prop.o).length<4){
+                if(!prop.o || String(prop.o).length<4){
                     throw new BadRequestException({context:prop.n, description:`The ${prop.n} field must contain at least 4 characters`})
                     // 400
                 }
             })
+            // if(!user.password)  throw new BadRequestException({context:'', description:`The  field must contain at least 4 characte`});
             user.password = await bcrypt.hash(user.password,10)
             const createdUser = new this.userModel(user);
             await createdUser.save().catch(e=>{
