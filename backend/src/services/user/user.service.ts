@@ -3,7 +3,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {User} from "../../models/User";
 import {ILoginDTO} from "../../dtos/LoginDTO";
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
 
@@ -17,6 +17,7 @@ export class UserService {
                     // 400
                 }
             })
+            user.password = await bcrypt.hash(user.password,10)
             const createdUser = new this.userModel(user);
             await createdUser.save().catch(e=>{
                 throw new ConflictException({context:'email', description:'Email already taken'})
@@ -24,9 +25,16 @@ export class UserService {
             });
             return createdUser;
     }
-    async login(user:ILoginDTO):Promise<User>{
-        return await this.userModel.findOne({email:user.email});
-
+    async login(user:ILoginDTO):Promise<User> {
+        const foundUser = await this.userModel.findOne({email: user.email}) as User;
+        if(!foundUser){
+            return null;
+        }
+        const isPasswordValid = await bcrypt.compare(user.password, foundUser.password);
+        if(!isPasswordValid){
+            return null;
+        }
+        return foundUser
     }
 
 }

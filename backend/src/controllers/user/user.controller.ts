@@ -1,11 +1,14 @@
-import {BadRequestException, Body, Controller, Post} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Post, Res} from '@nestjs/common';
 import {User} from "../../models/User";
 import {UserService} from "../../services/user/user.service";
 import {ILoginDTO} from "../../dtos/LoginDTO";
-
+import { JwtService } from '@nestjs/jwt';
+import {jwtConstants} from "../../constants";
 @Controller('user')
 export class UserController {
-    constructor(private readonly userService:UserService) {
+    constructor(private readonly userService:UserService,
+                private readonly jwtService:JwtService
+                ) {
     }
     @Post('/create')
     async create(@Body() user: User): Promise<User> {
@@ -23,12 +26,13 @@ export class UserController {
     }
 
     @Post('/login')
-    async login(@Body() user: Required<ILoginDTO>){
+    async login(@Body() user: Required<ILoginDTO>): Promise<{status:boolean, token:string}>{
         const result = await this.userService.login(user) as User;
         if(!result){
             throw new BadRequestException({context:"login", description:"Wrong login data"})
             // 400
         }
-        return result;
+        const token = await this.jwtService.signAsync({id:result.id} ,{secret:jwtConstants.secret});
+        return {status:true, token}
     }
 }

@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {TaskModule} from "./modules/task/task.module";
 import { UserModule } from './modules/user/user.module';
 
+import {JwtModule} from "@nestjs/jwt";
 
 
 @Module({
