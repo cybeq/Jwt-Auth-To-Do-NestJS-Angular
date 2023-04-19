@@ -1,0 +1,15 @@
+.form-container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding-inline:3%;
+  box-sizing: border-box;
+  form{
+
+    min-width: 50%;
+    @media(max-width: 900px) {
+      width:100%
+    }
+  }
+}

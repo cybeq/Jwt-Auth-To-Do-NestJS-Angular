@@ -22,10 +22,14 @@ export class TaskService {
     return this.http.get(`${env.API_URL}/task/status/list`) as Observable<{name:string, _id:string}[]>;
   }
 
-  saveTask(form:any):Observable<any> {
-    return  this.http.post(`${env.API_URL}/task/create`,form);
+  public saveTask(form:any):Observable<any> {
+    return  this.http.post(`${env.API_URL}/task/create`,form as ITask);
   }
-  updateTask(form:any, id:string):Observable<any>{
-    return this.http.patch(`${env.API_URL}/task/update/${id}`,form);
+  public updateTask(form:any, id:string):Observable<any>{
+    return this.http.patch(`${env.API_URL}/task/update/${id}`,form as Partial<ITask>);
+  }
+
+  public deleteTask(id:string):Observable<any>{
+    return this.http.delete(`${env.API_URL}/task/delete/${id}`);
   }
 }

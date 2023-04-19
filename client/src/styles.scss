@@ -32,10 +32,16 @@ form{
   button{
     border:none;
     margin-top:10px;
-    background: black;
-    padding-block:20px;
+    background: #343434;
+    padding-block:10px;
+    border-radius: 3px;
     color:White;
   }
+}
+select{
+  border:none;
+  padding-block:8px;
+  border-radius: 3px;
 }
 
 .error{

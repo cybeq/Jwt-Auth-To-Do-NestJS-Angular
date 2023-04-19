@@ -11,8 +11,6 @@ import {EmitterService} from "../../../../services/emitter/emitter.service";
 export class ListComponent implements OnInit{
   constructor(private readonly taskService:TaskService,
               private readonly emitterService:EmitterService) {}
-  buttonText:string = "Enable edit"
-  editMode!:{buttonRef:string, mode:boolean}[]
   status: {_id:string, name:string}[] = [];
   list:ITask[] = [];
   public ngOnInit(): void{
@@ -26,7 +24,7 @@ export class ListComponent implements OnInit{
       this.status = response;
     })
     this.emitterService.getAddToTaskListEmitter().subscribe((task:ITask)=>{
-      console.log('pawianik tutaj, ', task)
+      task.updateTimeString = new Date(task.updateTime).toLocaleString()
       this.list.unshift(task)
     })
   }
@@ -37,10 +35,9 @@ export class ListComponent implements OnInit{
     editRef.style.display="inherit"
   }
 
-  public saveEdit(id:string): void{
+  public saveEdit(id:string, cancel?:boolean): void{
     const readRef = document.getElementById(`read_${id}`) as HTMLDivElement;
     const editRef = document.getElementById(`edit_${id}`) as HTMLDivElement;
-
     const nameRef = document.getElementById(`name_${id}`) as HTMLInputElement;
     const descriptionRef = document.getElementById(`description_${id}`) as HTMLInputElement;
     const statusRef = document.getElementById(`status_${id}`) as HTMLSelectElement;
@@ -50,13 +47,21 @@ export class ListComponent implements OnInit{
     this.taskService.updateTask(formGroup, taskId).subscribe((response:ITask)=>{
       const index = this.list.findIndex(task => task._id === response._id);
       if (index !== -1) {
+        response.updateTimeString = new Date(response.updateTime).toLocaleString()
         this.list[index] = response;
       }
     })
-
-    readRef.style.display="inherit"
-    editRef.style.display="none"
-
+  }
+  public delete(id:string):void{
+    this.taskService.deleteTask(id).subscribe((response:{status:string, message:string})=>{
+      if(response.status === "success"){
+        this.list = this.list.filter(task => task._id !== id);
+      }
+    })
+  }
+  public cancel(id:string):void{
+    (document.getElementById(`read_${id}`) as HTMLDivElement).style.display="inherit";
+    (document.getElementById(`edit_${id}`) as HTMLDivElement).style.display="none";
   }
 
 }

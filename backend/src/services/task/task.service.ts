@@ -13,12 +13,13 @@ export class TaskService {
             task.status = statusId;
         }
         task.user = userId;
+        task.updateTime = Date.now();
         const createdTask = new this.taskModel(task);
         await createdTask.save();
         return this.taskModel.findOne(createdTask.toObject()).populate('status').populate('user').populate('updateUser');
     }
     async list(): Promise<Task[]>{
-        return this.taskModel.find({}).populate('status').populate('user').populate('updateUser').sort('-updateTime');
+        return this.taskModel.find({}).populate('status').populate('user').populate('updateUser').sort([['updateTime', -1]]);
     }
     async statusList(): Promise<Status[]>{
         return this.statusModel.find({})
