@@ -45,10 +45,12 @@ export class ListComponent implements OnInit{
     const taskId = id;
     const formGroup = {name: nameRef.value, description: descriptionRef.value, status: statusRef.value}
     this.taskService.updateTask(formGroup, taskId).subscribe((response:ITask)=>{
-      const index = this.list.findIndex(task => task._id === response._id);
-      if (index !== -1) {
-        response.updateTimeString = new Date(response.updateTime).toLocaleString()
-        this.list[index] = response;
+      if(response !== null) {
+        const index = this.list.findIndex(task => task._id === response._id);
+        if (index !== -1) {
+          response.updateTimeString = new Date(response.updateTime).toLocaleString()
+          this.list[index] = response;
+        }
       }
     })
   }
