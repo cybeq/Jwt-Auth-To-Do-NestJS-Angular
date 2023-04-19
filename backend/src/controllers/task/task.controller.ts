@@ -18,6 +18,10 @@ export class TaskController {
     async list(@Req() req:IAuthRequest){
         return await this.taskService.list();
     }
+    @Get('/status/list')
+    async statusList(@Req() req:IAuthRequest){
+        return await this.taskService.statusList();
+    }
     @Post('/create')
     async create(@Req() req:IAuthRequest ,@Body() task:Task): Promise<Task> {
         return this.taskService.create(task, req.userId);

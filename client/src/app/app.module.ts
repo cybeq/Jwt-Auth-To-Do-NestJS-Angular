@@ -13,6 +13,7 @@ import { ListComponent } from './components/dashboard/list/list/list.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthInterceptor} from "./core/interceptor/auth.interceptor";
+import { AddComponent } from './components/dashboard/add/add/add.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {AuthInterceptor} from "./core/interceptor/auth.interceptor";
     WelcomeComponent,
     SignInComponent,
     SignUpComponent,
-    ListComponent
+    ListComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

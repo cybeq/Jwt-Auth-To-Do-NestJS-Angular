@@ -1,1 +1,38 @@
-<p>list works!</p>
+<router-outlet></router-outlet>
+<div class="tasks">
+
+  <div *ngFor="let task of list" [id]="'container_'+task._id">
+<!--    read mode-->
+    <div class="read-mode" [id]="'read_'+task._id">
+        <span class="status-container">
+          <p class="status"
+             [style]="'background:'+{Active:'green', Disabled:'black', Awaiting:'grey', Finished:'red'}[task.status.name]
+                     +';color:'+{Active:'black', Disabled:'white', Awaiting:'black', Finished:'red'}[task.status.name] "
+          >{{task.status.name}}</p>
+        </span>
+        <h2>{{task.name}}</h2>
+        <h3 > {{task.description}}</h3>
+        <p *ngIf="task.user">Dodano przez {{task.user.name}}</p>
+        <p *ngIf="task.updateUser">Zaktualizowano przez {{task.updateUser.name}}</p>
+        <p>{{task.updateTimeString}}</p>
+        <button [id]="'enable_'+task._id" (click)="edit(task._id)">Enable edit</button>
+    </div>
+<!--  edit mode-->
+    <div class="edit-mode" [id]="'edit_'+task._id">
+        <span class="status-container">
+          <select [id]="'status_'+task._id">
+            <option *ngFor="let s of status" [value]="s._id">{{s.name}}</option>
+          </select>
+        </span><br/><br/>
+      <input type="text" [id]="'name_'+task._id" [value]="task.name"><br/><br/>
+      <input type="text" [id]="'description_'+task._id" [value]="task.description">
+      <p *ngIf="task.user">Dodano przez {{task.user.name}}</p>
+      <p *ngIf="task.updateUser">Zauktualizowano przez{{task.updateUser.name}}</p>
+      <p>{{task.updateTimeString}}</p>
+      <button [id]="'save_'+task._id" (click)="saveEdit(task._id)">Save</button>
+    </div>
+
+  </div>
+
+
+</div>

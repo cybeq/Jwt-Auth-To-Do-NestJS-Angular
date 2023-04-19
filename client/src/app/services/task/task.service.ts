@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {env} from "../../env";
+import {ITask} from "../../models/ITask";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,18 @@ export class TaskService {
   public async checkPrivilege(){
     return this.http.get(`${env.API_URL}/task/auth` ).toPromise()
   }
-  public getTasks(){
-    return this.http.get(`${env.API_URL}/task`)
+  public getTasks(): Observable<any>{
+    return this.http.get(`${env.API_URL}/task`) as Observable<ITask[]>;
   }
 
+  public getStatusList():Observable<any> {
+    return this.http.get(`${env.API_URL}/task/status/list`) as Observable<{name:string, _id:string}[]>;
+  }
+
+  saveTask(form:any):Observable<any> {
+    return  this.http.post(`${env.API_URL}/task/create`,form);
+  }
+  updateTask(form:any, id:string):Observable<any>{
+    return this.http.patch(`${env.API_URL}/task/update/${id}`,form);
+  }
 }

@@ -8,6 +8,7 @@ import {SignInComponent} from "./components/landing/signing/sign-in/sign-in.comp
 import {SignUpComponent} from "./components/landing/signup/sign-up/sign-up.component";
 import {ListComponent} from "./components/dashboard/list/list/list.component";
 import {AuthGuard} from "./core/middleware/auth.guard";
+import {AddComponent} from "./components/dashboard/add/add/add.component";
 
 
 const routes: Routes = [
@@ -44,9 +45,13 @@ const routes: Routes = [
                   component: ListComponent,
                   children:[
                             {
-                              path:"edit",
+                              path:"edit/:id",
                               component:EditComponent
-                            }
+                            },
+                            {
+                              path:"add",
+                              component:AddComponent
+                            },
                   ]
                 },
     ],
