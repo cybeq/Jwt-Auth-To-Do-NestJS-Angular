@@ -12,9 +12,8 @@ export class DashboardComponent {
   constructor(private authService:AuthService) {
   }
 
-  public login(){
-    this.authService.login({email:this.email, password:this.password}).subscribe(res=>{
-      console.log(res)
-    })
+  public logout(){
+    localStorage.clear();
+    location.reload()
   }
 }
