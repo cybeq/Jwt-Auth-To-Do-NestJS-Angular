@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 .tasks{
   display: flex;
   justify-content: center;
@@ -5,7 +6,9 @@
   align-items: center;
   gap:30px;
   margin-top:20px;
-  font-family: Monospaced, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+
+
 
   button{
     border:none;

@@ -20,7 +20,7 @@
         <h3 > {{task.description}}</h3>
         <label>Dodano przez</label>
         <p *ngIf="task.user">{{task.user.name}}</p>
-        <label>Zaktualizowano przez</label>
+        <label *ngIf="task.updateUser">Zaktualizowano przez</label>
         <p *ngIf="task.updateUser">{{task.updateUser.name}}</p>
         <label>Ostatnia aktualizacja</label>
         <p>{{task.updateTimeString}}</p>
@@ -40,7 +40,7 @@
       <input type="text" [id]="'description_'+task._id" [value]="task.description"><br/><br/>
       <label>Dodano przez </label><br/>
       <p *ngIf="task.user">{{task.user.name}}</p>
-      <label>Zaktualizowano przez </label><br/>
+      <label *ngIf="task.updateUser">Zaktualizowano przez </label><br/>
       <p *ngIf="task.updateUser">{{task.updateUser.name}}</p>
       <label>Data aktualizacji </label><br/>
       <p>{{task.updateTimeString}}</p>
