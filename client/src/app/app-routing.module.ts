@@ -19,17 +19,20 @@ const routes: Routes = [
   {
     path:"landing",
     component:LandingComponent,
+    canActivate:[AuthGuard],
     children:[
                 {
-                  path:'welcome',
-                  component: WelcomeComponent
+                  path:'',
+                  component: WelcomeComponent,
+                  children: [
+                              { path:'signin',
+                                component:  SignInComponent
+                              },
+                              { path:'signup',
+                                component:  SignUpComponent
+                              }
+                  ]
                 },
-                { path:'signin',
-                  component:  SignInComponent
-                },
-                { path:'signup',
-                  component:  SignUpComponent
-                }
     ],
   },
   {
@@ -37,7 +40,7 @@ const routes: Routes = [
     component:DashboardComponent,
     canActivate:[AuthGuard],
     children:[
-                { path:"list",
+                { path:"",
                   component: ListComponent,
                   children:[
                             {

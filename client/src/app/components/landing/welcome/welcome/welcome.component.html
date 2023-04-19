@@ -1,1 +1,11 @@
-<p>welcome works!</p>
+<h1>Welcome! It looks like you are not logged in...</h1>
+<div class="action_buttons_container">
+  <button routerLink="signin">Sing In</button><button routerLink="signup">Make new account</button>
+</div>
+<section class="action_forms"   #actionForms>
+<router-outlet ></router-outlet>
+</section>
+
+<section class="error" #errorPopup>
+  <div><strong>{{errorCode}}</strong> {{errorMessage}}</div>
+</section>

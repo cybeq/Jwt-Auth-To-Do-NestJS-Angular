@@ -10,6 +10,8 @@ import { WelcomeComponent } from './components/landing/welcome/welcome/welcome.c
 import { SignInComponent } from './components/landing/signing/sign-in/sign-in.component';
 import { SignUpComponent } from './components/landing/signup/sign-up/sign-up.component';
 import { ListComponent } from './components/dashboard/list/list/list.component';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { ListComponent } from './components/dashboard/list/list/list.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,7 +7,6 @@ import {Status} from "../../models/Status";
 
 @Injectable()
 export class TaskService {
-
     constructor(@InjectModel(Task.name) private taskModel: Model<Task>,
                 @InjectModel(Status.name) private statusModel: Model<Status>) {}
     async create(task:any, userId:string): Promise<Task>{
@@ -54,5 +53,4 @@ export class TaskService {
         }
         return task.toObject();
     }
-
 }

@@ -10,6 +10,10 @@ import {IAuthRequest} from "../../core/auth/IAuthRequest";
 export class TaskController {
     constructor(private readonly taskService: TaskService) {}
 
+    @Get('auth')
+    async auth(@Req() req:IAuthRequest){
+        return true;
+    }
     @Get()
     async list(@Req() req:IAuthRequest){
         return await this.taskService.list();

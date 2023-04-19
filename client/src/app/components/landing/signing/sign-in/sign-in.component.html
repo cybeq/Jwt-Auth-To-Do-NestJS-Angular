@@ -1,1 +1,7 @@
-<p>sign-in works!</p>
+<div #loginFormElement>
+  <form [formGroup]="loginForm">
+    <input formControlName="email" type="email" placeholder="email">
+    <input formControlName="password" type="password" placeholder="password">
+    <button (click)="loginSubmit()">Zaloguj</button>
+  </form>
+</div>

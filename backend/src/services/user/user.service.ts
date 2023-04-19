@@ -6,7 +6,6 @@ import {ILoginDTO} from "../../dtos/LoginDTO";
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
-
     constructor(@InjectModel(User.name) private userModel: Model<User>) { }
     async create(user:User):Promise<User>
     {
@@ -17,7 +16,6 @@ export class UserService {
                     // 400
                 }
             })
-            // if(!user.password)  throw new BadRequestException({context:'', description:`The  field must contain at least 4 characte`});
             user.password = await bcrypt.hash(user.password,10)
             const createdUser = new this.userModel(user);
             await createdUser.save().catch(e=>{
