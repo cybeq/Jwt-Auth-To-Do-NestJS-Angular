@@ -12,14 +12,14 @@ export class UserService {
             const lenghtValidation = [{n:'password',o:user.password}, {n:'email', o:user.email}, {n:'name', o:user.name}];
             lenghtValidation.forEach(prop => {
                 if(!prop.o || String(prop.o).length<4){
-                    throw new BadRequestException({context:prop.n, description:`The ${prop.n} field must contain at least 4 characters`})
+                    throw new BadRequestException()
                     // 400
                 }
             })
             user.password = await bcrypt.hash(user.password,10)
             const createdUser = new this.userModel(user);
             await createdUser.save().catch(e=>{
-                throw new ConflictException({context:'email', description:'Email already taken'})
+                throw new ConflictException()
                 // 409
             });
             return createdUser;
